@@ -1,0 +1,25 @@
+.header{
+    height: 6.5rem;
+    box-shadow: 0 .2rem .4rem 0 rgba($color: #000000, $alpha: .2);
+
+    .wrap{
+        max-width: 1450px;
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        .logo{
+            width: 10px;
+            position: absolute;
+            left: 10px; top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+
+            img{
+                display: block;
+                margin: 0;
+            }
+        }
+    }
+}
