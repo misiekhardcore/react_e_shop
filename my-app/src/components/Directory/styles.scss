@@ -1,0 +1,36 @@
+.directory{
+    height: 100%;
+    .wrap{
+        height: inherit;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        .item{
+            height: inherit;
+            background-position: center;
+            background-size: cover;
+            width: 40%;
+            height: calc(100%-6.5rem);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+
+            button{
+                cursor: pointer;
+                padding: 0.5rem 1rem;
+                margin-bottom: 2em;
+                color: #000;
+                font-size: 2rem;
+                text-transform: uppercase;
+                border: 2px solid #000;
+                border-radius: .5rem;
+                background-color: rgba(255,255,255,0.5);
+
+                &:hover{
+                    background-color: rgba(200, 200, 200, 0.5);
+                }
+            }
+        }
+    }
+}

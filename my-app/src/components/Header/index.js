@@ -7,7 +7,7 @@ const Header = props => {
         <header className='header'>
             <div className='wrap'>
                 <div className='logo'>
-                    <img src={Logo} alt='Logo image' />
+                    <img src={Logo} alt='Logo' />
                 </div>
             </div>
         </header>
