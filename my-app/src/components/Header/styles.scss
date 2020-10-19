@@ -32,7 +32,12 @@
   }
 
   li{
+      display: inline-block;
       list-style-type: none;
+
+      &+li{
+          margin-left: 1em;
+      }
 
       a{
           font-size: 1.8rem;
