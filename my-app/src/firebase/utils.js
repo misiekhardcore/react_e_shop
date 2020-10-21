@@ -1,40 +1,41 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth'
-import {firebaseConfig} from './config'
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+import { firebaseConfig } from "./config";
 
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig);
 
-export const auth = firebase.auth()
-export const firestore = firebase.firestore()
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
 
-const GoogleProvider = new firebase.auth.GoogleAuthProvider()
-GoogleProvider.setCustomParameters({prompt: 'select_account'})
-export const signInWthGoogle = () => auth.signInWithPopup(GoogleProvider) 
+const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+GoogleProvider.setCustomParameters({ prompt: "select_account" });
+export const signInWthGoogle = () => auth.signInWithPopup(GoogleProvider);
 
 export const handleUserProfile = async (userAuth, additionalData) => {
-    if(!userAuth) return
+  if (!userAuth) return;
 
-    const {uid} = userAuth
+  const { uid } = userAuth;
+  console.log(userAuth)
 
-    const userRef = firestore.doc(`users/${uid}`)
-    const snapshot = await userRef.get()
+  const userRef = firestore.doc(`users/${uid}`);
+  const snapshot = await userRef.get();
 
-    if(!snapshot.exists){
-        const {displayName, email} = userAuth
-        const timestamp = new Date()
+  if (!snapshot.exists) {
+    const { displayName, email } = userAuth;
+    const timestamp = new Date();
 
-        try{
-            await userRef.set({
-                displayName,
-                email,
-                createdDate: timestamp,
-                ...additionalData
-            })
-        } catch(e){
-            console.log(e)
-        }
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdDate: timestamp,
+        ...additionalData
+      });
+    } catch (e) {
+      console.log(e);
     }
-
-    return userRef
-}
+  }
+  console.log(userRef);
+  return userRef;
+};
