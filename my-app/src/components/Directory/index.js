@@ -8,20 +8,7 @@ const Directory = (props) => {
     <div className="directory">
       <div className="wrap">
         <div className="item" style={{ backgroundImage: `url(${ShopMen})` }}>
-          <button
-            onClick={() => {
-              fetch("http://localhost:3000/posts", {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              })
-                .then((res) => res.json())
-                .then((json) => console.log(json));
-            }}
-          >
-            Shop Mens
-          </button>
+          <button>Shop Mens</button>
         </div>
         <div className="item" style={{ backgroundImage: `url(${ShopWomen})` }}>
           <button>Shop Womens</button>
