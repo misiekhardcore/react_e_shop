@@ -17,7 +17,7 @@ class App extends Component {
   authListener = null;
 
   componentDidMount() {
-    const {setCurrentUser} = this.props
+    const { setCurrentUser } = this.props;
 
     this.authListener = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -30,7 +30,7 @@ class App extends Component {
         });
       }
 
-      setCurrentUser(userAuth)
+      setCurrentUser(userAuth);
     });
   }
 
