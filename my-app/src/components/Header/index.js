@@ -2,7 +2,7 @@ import React from "react";
 import "./styles.scss";
 import Logo from "./../../assets/logo.png";
 import { Link } from "react-router-dom";
-import { auth } from './../../firebase/utils'
+import { auth } from "./../../firebase/utils";
 
 const Header = (props) => {
   const { currentUser } = props;
@@ -19,7 +19,7 @@ const Header = (props) => {
           {currentUser && (
             <ul>
               <li>
-                <span onClick={()=>auth.signOut()}>Log Out</span>
+                <span onClick={() => auth.signOut()}>Log Out</span>
               </li>
             </ul>
           )}

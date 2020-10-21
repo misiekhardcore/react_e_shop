@@ -9,6 +9,7 @@ import "./default.scss";
 import Homepage from "./pages/Homepage";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
+import Recovery from "./pages/Recovery";
 
 const initialState = {
   currentUser: null,
@@ -25,22 +26,22 @@ class App extends Component {
   authListener = null;
 
   componentDidMount() {
-    this.authListener = auth.onAuthStateChanged(async userAuth => {
-      if(userAuth){
-        const userRef = await handleUserProfile(userAuth)
-        userRef.onSnapshot(snapshot => {
+    this.authListener = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await handleUserProfile(userAuth);
+        userRef.onSnapshot((snapshot) => {
           this.setState({
             currentUser: {
               id: snapshot.id,
-              ...snapshot.data()
-            }
-          })
-        })
+              ...snapshot.data(),
+            },
+          });
+        });
       }
 
       this.setState({
-        ...initialState
-      })
+        ...initialState,
+      });
     });
   }
 
@@ -63,14 +64,15 @@ class App extends Component {
           />
           <Route
             path="/registration"
-            render={() => 
-            currentUser ? (
-              <Redirect to='/' />
-            ) : (
-              <MainLayout currentUser={currentUser}>
-                <Registration />
-              </MainLayout>
-            )}
+            render={() =>
+              currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <MainLayout currentUser={currentUser}>
+                  <Registration />
+                </MainLayout>
+              )
+            }
           />
           <Route
             path="/login"
@@ -80,6 +82,18 @@ class App extends Component {
               ) : (
                 <MainLayout currentUser={currentUser}>
                   <Login />
+                </MainLayout>
+              )
+            }
+          />
+          <Route
+            path="/recovery"
+            render={() =>
+              currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <MainLayout currentUser={currentUser}>
+                  <Recovery />
                 </MainLayout>
               )
             }

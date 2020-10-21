@@ -16,7 +16,7 @@ export const handleUserProfile = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
   const { uid } = userAuth;
-  console.log(userAuth)
+  console.log(userAuth);
 
   const userRef = firestore.doc(`users/${uid}`);
   const snapshot = await userRef.get();
@@ -30,7 +30,7 @@ export const handleUserProfile = async (userAuth, additionalData) => {
         displayName,
         email,
         createdDate: timestamp,
-        ...additionalData
+        ...additionalData,
       });
     } catch (e) {
       console.log(e);

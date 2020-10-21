@@ -3,6 +3,7 @@ import React, { Component } from "react";
 
 import { auth, handleUserProfile } from "./../../firebase/utils";
 
+import AuthWrapper from "./../AuthWrapper";
 import Button from "./../../components/forms/Button";
 import Input from "./../../components/forms/Input";
 
@@ -26,13 +27,7 @@ class Signup extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const {
-      email,
-      displayName,
-      password,
-      confirmPassword,
-      errors,
-    } = this.state;
+    const { email, displayName, password, confirmPassword } = this.state;
 
     if (password !== confirmPassword) {
       const err = ["Passwords don't match"];
@@ -68,9 +63,13 @@ class Signup extends Component {
       confirmPassword,
       errors,
     } = this.state;
+
+    const configAuthWrapper = {
+      headline: "Sign up",
+    };
+
     return (
-      <div className="signup">
-        <h2>Sign up</h2>
+      <AuthWrapper {...configAuthWrapper}>
         {errors.length > 0 && (
           <ul className="error">
             {errors.map((e, i) => {
@@ -109,7 +108,7 @@ class Signup extends Component {
           />
           <Button type="submit">Sign up</Button>
         </form>
-      </div>
+      </AuthWrapper>
     );
   }
 }

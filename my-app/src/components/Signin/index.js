@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
+import AuthWrapper from "./../AuthWrapper";
 import Button from "./../forms/Button";
 import Input from "./../forms/Input";
 
@@ -23,17 +26,15 @@ class Signin extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const {email, password} = this.state
+    const { email, password } = this.state;
 
-    try{
-
-      await auth.signInWithEmailAndPassword(email,password)
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
       this.setState({
-        ...initialState
-      })
-
-    } catch(err){
-      console.log(err)
+        ...initialState,
+      });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -43,16 +44,14 @@ class Signin extends Component {
   }
 
   render() {
-    const {
-      email,
-      password,
-      errors
-    } = this.state;
+    const { email, password } = this.state;
+
+    const configAuthWrapper = {
+      headline: "Sign in",
+    };
 
     return (
-      <div className="login">
-        <h2>Sign In</h2>
-
+      <AuthWrapper {...configAuthWrapper}>
         <form onSubmit={this.handleSubmit}>
           <Input
             type="email"
@@ -68,12 +67,15 @@ class Signin extends Component {
             placeholder="Password"
             onChange={this.handleChange}
           />
-          <Button type='submit'>Sign In</Button>
+          <Button type="submit">Sign In</Button>
         </form>
         <form onSubmit={this.handleSubmit}>
           <Button onClick={signInWthGoogle}>Sign In with Google</Button>
         </form>
-      </div>
+        <div className="recoverylink">
+          <Link to="/recovery">Forgot password?</Link>
+        </div>
+      </AuthWrapper>
     );
   }
 }
