@@ -1,32 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import {
+  signInUser,
+  signInWthGoogle,
+  resetAllAuthForms,
+} from "./../../redux/User/user.actions";
+import "./styles.scss";
 
 import AuthWrapper from "./../AuthWrapper";
 import Button from "./../forms/Button";
 import Input from "./../forms/Input";
 
-import { signInWthGoogle, auth } from "./../../firebase/utils";
-import "./styles.scss";
+const mapState = ({ user }) => ({
+  signInSuccess: user.signInSuccess,
+});
 
 const Signin = (props) => {
+  const { signInSuccess } = useSelector(mapState);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (signInSuccess) {
+      resetForm();
+      dispatch(resetAllAuthForms());
+      props.history.push("/");
+    }
+  }, [signInSuccess, props.history, dispatch]);
 
   const resetForm = () => {
     setEmail("");
     setPassword("");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(signInUser({ email, password }));
+  };
 
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      resetForm();
-      props.history.push("/");
-    } catch (err) {
-      // console.log(err);
-    }
+  const handleGoogleSignIn = () => {
+    dispatch(signInWthGoogle());
   };
 
   const configAuthWrapper = {
@@ -51,9 +66,10 @@ const Signin = (props) => {
           handleChange={(e) => setPassword(e.target.value)}
         />
         <Button type="submit">Sign In</Button>
-      </form>
-      <form onSubmit={handleSubmit}>
-        <Button onClick={signInWthGoogle}>Sign In with Google</Button>
+
+        <Button type="button" onClick={handleGoogleSignIn}>
+          Sign In with Google
+        </Button>
       </form>
       <div className="recoverylink">
         <Link to="/recovery">Forgot password?</Link>
