@@ -2,67 +2,37 @@ import userTypes from "./user.types";
 
 const INITIAL_STATES = {
   currentUser: null,
-  signInSuccess: false,
-  signUPSuccess: false,
-  signUpError: [],
-  reserPassSuccess: false,
-  resetPassError: [],
-  signInGoogleSuccess: false,
-  signInGoogleError: [],
+  resetPasswordSuccess: false,
+  userErr: [],
 };
 
 const userReducer = (state = INITIAL_STATES, action) => {
   switch (action.type) {
-    case userTypes.SET_CURRENT_USER:
-      return {
-        ...state,
-        currentUser: action.payload,
-      };
     case userTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
-        signInSuccess: action.payload,
+        currentUser: action.payload,
+        userErr: [],
       };
-    case userTypes.SIGN_UP_ERROR:
+    case userTypes.USER_ERROR:
       return {
         ...state,
-        signUpError: action.payload,
+        userErr: action.payload,
       };
-    case userTypes.SIGN_UP_SUCCESS:
+    case userTypes.RESET_PASSWORD_SUCCESS:
       return {
         ...state,
-        signUpSuccess: action.payload,
+        resetPasswordSuccess: action.payload,
       };
-    case userTypes.RESET_PASS_SUCCESS:
+    case userTypes.SIGN_IN_GOOGLE_START:
       return {
         ...state,
-        resetPassSuccess: action.payload,
       };
-    case userTypes.RESET_PASS_ERROR:
+    case userTypes.RESET_USER_STATE:
+    case userTypes.SIGN_OUT_USER_SUCCESS:
       return {
         ...state,
-        resetPassError: action.payload,
-      };
-    case userTypes.SIGN_IN_GOOGLE_SUCCESS:
-      return {
-        ...state,
-        signInGoogleSuccess: action.payload,
-      };
-    case userTypes.signInGoogleError:
-      return {
-        ...state,
-        signInGoogleError: action.payload,
-      };
-    case userTypes.RESET_AUTH_FORM:
-      return {
-        ...state,
-        signInSuccess: false,
-        signUPSuccess: false,
-        signUpError: [],
-        reserPassSuccess: false,
-        resetPassError: [],
-        signInGoogleSuccess: false,
-        signInGoogleError: [],
+        ...INITIAL_STATES,
       };
     default:
       return state;

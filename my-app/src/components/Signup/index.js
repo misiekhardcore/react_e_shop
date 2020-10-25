@@ -1,21 +1,22 @@
 import "./styles.scss";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { singUpUser, resetAllAuthForms } from "./../../redux/User/user.actions";
-import { withRouter } from "react-router-dom";
+import { signUpUserStart } from "./../../redux/User/user.actions";
+import { useHistory } from "react-router-dom";
 
 import AuthWrapper from "./../AuthWrapper";
 import Button from "./../../components/forms/Button";
 import Input from "./../../components/forms/Input";
 
 const mapState = ({ user }) => ({
-  signUpSuccess: user.signUpSuccess,
-  signUpError: user.signUpError,
+  currentUser: user.currentUser,
+  userErr: user.userErr,
 });
 
 const Signup = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const { signUpSuccess, signUpError } = useSelector(mapState);
+  const { currentUser, userErr } = useSelector(mapState);
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
@@ -23,18 +24,17 @@ const Signup = (props) => {
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    if (signUpSuccess) {
+    if (currentUser) {
       resetForm();
-      dispatch(resetAllAuthForms());
-      props.history.push("/");
+      history.push("/");
     }
-  }, [signUpSuccess, props.history, dispatch]);
+  }, [currentUser, history, dispatch]);
 
   useEffect(() => {
-    if (Array.isArray(signUpError) && signUpError.length > 0) {
-      setErrors(signUpError);
+    if (Array.isArray(userErr) && userErr.length > 0) {
+      setErrors(userErr);
     }
-  }, [signUpError]);
+  }, [userErr]);
 
   const resetForm = () => {
     setEmail("");
@@ -46,7 +46,9 @@ const Signup = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(singUpUser({ displayName, email, password, confirmPassword }));
+    dispatch(
+      signUpUserStart({ displayName, email, password, confirmPassword })
+    );
   };
 
   const configAuthWrapper = {
@@ -97,4 +99,4 @@ const Signup = (props) => {
   );
 };
 
-export default withRouter(Signup);
+export default Signup;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
-  resetPassword,
-  resetAllAuthForms,
+  resetPasswordSatrt,
+  resetUserState,
 } from ".//../../redux/User/user.actions";
 import "./styles.scss";
 
@@ -12,39 +12,33 @@ import Button from "./../forms/Button";
 import Input from "./../forms/Input";
 
 const mapState = ({ user }) => ({
-  resetPassSuccess: user.resetPassSuccess,
-  resetPassError: user.resetPassError,
+  resetPasswordSuccess: user.resetPasswordSuccess,
+  userError: user.userErr,
 });
 
 const EmailPassword = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const { resetPassSuccess, resetPassError } = useSelector(mapState);
+  const { resetPasswordSuccess, userError } = useSelector(mapState);
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    if (resetPassSuccess) {
-      resetForm();
-      dispatch(resetAllAuthForms());
-      props.history.push("login");
+    if (resetPasswordSuccess) {
+      dispatch(resetUserState());
+      history.push("login");
     }
-  }, [resetPassSuccess, props.history, dispatch]);
+  }, [resetPasswordSuccess, history, dispatch]);
 
   useEffect(() => {
-    if (Array.isArray(resetPassError) && resetPassError.length > 0) {
-      setErrors(resetPassError);
+    if (Array.isArray(userError) && userError.length > 0) {
+      setErrors(userError);
     }
-  }, [resetPassError]);
-
-  const resetForm = () => {
-    setEmail("");
-    setErrors([]);
-  };
+  }, [userError]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(resetPassword({ email }));
+    dispatch(resetPasswordSatrt({ email }));
   };
 
   const configAuthWrapper = {
@@ -74,4 +68,4 @@ const EmailPassword = (props) => {
   );
 };
 
-export default withRouter(EmailPassword);
+export default EmailPassword;
