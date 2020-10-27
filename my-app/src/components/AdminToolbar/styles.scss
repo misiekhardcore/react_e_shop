@@ -14,15 +14,15 @@
 
     li {
       a {
-          display: block;
-          line-height: 1;
-          padding: .5rem 1rem;
+        display: block;
+        line-height: 1;
+        padding: 0.5rem 1rem;
         color: white;
-        transition: all .4s ease-in-out;
+        transition: all 0.4s ease-in-out;
 
-        &:hover{
-            background-color: rgba(255, 255, 255, .8);
-            color: black;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.8);
+          color: black;
         }
       }
     }

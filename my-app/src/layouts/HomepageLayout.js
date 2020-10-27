@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./../components/Header";
-import "./../../src/default.scss";
 import Footer from "./../components/Footer";
+import "./../../src/default.scss";
 
 const HomepageLayout = (props) => {
   return (

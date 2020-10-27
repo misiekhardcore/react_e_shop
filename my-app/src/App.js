@@ -5,11 +5,13 @@ import { checkUserSession } from "./redux/User/user.actions";
 import "./default.scss";
 
 //admin
-import AdminToolbar from './components/AdminToolbar'
+import AdminToolbar from "./components/AdminToolbar";
 
 //layouts
 import MainLayout from "./layouts/MainLayout";
 import HomepageLayout from "./layouts/HomepageLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
+import AdminLayout from "./layouts/AdminLayout";
 
 //hoc
 import WithAuth from "./hoc/withAuth";
@@ -71,9 +73,9 @@ const App = (props) => {
           path="/dashboard"
           render={() => (
             <WithAuth>
-              <MainLayout>
+              <DashboardLayout>
                 <Dashboard />
-              </MainLayout>
+              </DashboardLayout>
             </WithAuth>
           )}
         />
@@ -81,9 +83,9 @@ const App = (props) => {
           path="/admin"
           render={() => (
             <WithAdminAuth>
-              <MainLayout>
+              <AdminLayout>
                 <Admin />
-              </MainLayout>
+              </AdminLayout>
             </WithAdminAuth>
           )}
         />
