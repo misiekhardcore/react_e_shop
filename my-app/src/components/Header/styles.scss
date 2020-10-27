@@ -1,6 +1,7 @@
 .header {
   height: 6.5rem;
   box-shadow: 0 0.2rem 0.4rem 0 rgba($color: #000000, $alpha: 0.2);
+  vertical-align: center;
 
   .wrap {
     max-width: 1450px;
@@ -21,9 +22,16 @@
     }
 
     .callToActions {
-      padding: 1em;
       margin-left: auto;
+      height: 100%;
     }
+  }
+
+  nav {
+    height: 100%;
+  }
+  ul {
+    display: flex;
   }
 
   ul,
@@ -31,14 +39,18 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    height: 100%;
   }
 
   li {
-    display: inline-block;
     list-style-type: none;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
 
-    & + li {
-      margin-left: 1em;
+    &:hover {
+      background-color: #ccc;
+      cursor: pointer;
     }
 
     a,
@@ -48,7 +60,6 @@
       color: inherit;
       text-decoration: none;
       text-transform: uppercase;
-      cursor: pointer;
     }
   }
 }
