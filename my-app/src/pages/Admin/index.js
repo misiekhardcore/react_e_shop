@@ -11,7 +11,7 @@ import Modal from "./../../components/Modal";
 import Button from "./../../components/forms/Button";
 import Input from "./../../components/forms/Input";
 import Select from "./../../components/forms/Select";
-import productTypes from "../../redux/Product/product.types";
+import LoadMore from "./../../components/LoadMore";
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
@@ -25,6 +25,8 @@ const Admin = (props) => {
   const [productName, setProductName] = useState("");
   const [productThumbnail, setProductThumbnail] = useState("");
   const [productPrice, setProductPrice] = useState(0);
+
+  const { data, queryDoc, isLastPage } = products;
 
   useEffect(() => {
     dispatch(fetchProductsStart());
@@ -57,6 +59,19 @@ const Admin = (props) => {
       })
     );
     resetForm();
+  };
+
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({
+        startAfterDoc: queryDoc,
+        persistProducts: data,
+      })
+    );
+  };
+
+  const configLoadMore = {
+    onLoadMoreEvent: handleLoadMore,
   };
 
   return (
@@ -137,42 +152,45 @@ const Admin = (props) => {
                   cellSpacing="0"
                 >
                   <tbody>
-                    {products.map((product, index) => {
-                      const {
-                        productName,
-                        productCategory,
-                        productThumbnail,
-                        productPrice,
-                        documentID,
-                      } = product;
-                      return (
-                        <tr key={index}>
-                          <td>
-                            <img
-                              className="thumb"
-                              src={productThumbnail}
-                              alt=""
-                            />
-                          </td>
-                          <td>{productName}</td>
-                          <td>{productCategory}</td>
-                          <td>{productPrice}</td>
-                          <td>
-                            <Button
-                              onClick={() =>
-                                dispatch(deleteProductStart(documentID))
-                              }
-                            >
-                              Delete
-                            </Button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {Array.isArray(data) &&
+                      data.length > 0 &&
+                      data.map((product, index) => {
+                        const {
+                          productName,
+                          productCategory,
+                          productThumbnail,
+                          productPrice,
+                          documentID,
+                        } = product;
+                        return (
+                          <tr key={index}>
+                            <td>
+                              <img
+                                className="thumb"
+                                src={productThumbnail}
+                                alt=""
+                              />
+                            </td>
+                            <td>{productName}</td>
+                            <td>{productCategory}</td>
+                            <td>{productPrice}</td>
+                            <td>
+                              <Button
+                                onClick={() =>
+                                  dispatch(deleteProductStart(documentID))
+                                }
+                              >
+                                Delete
+                              </Button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </td>
             </tr>
+            <tr>{!isLastPage && <LoadMore {...configLoadMore} />}</tr>
           </tbody>
         </table>
       </div>
