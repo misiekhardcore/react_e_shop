@@ -1,0 +1,50 @@
+.productCard {
+  width: 80%;
+  margin: 2rem auto;
+  border: 1px solid black;
+  padding: 2rem;
+
+  .hero {
+    width: 100%;
+    height: 30rem;
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0 auto;
+    }
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+
+    .productName,
+    .productPrice {
+      display: block;
+    }
+    .productName {
+      width: 70%;
+      text-align: left;
+    }
+
+    .addToCart {
+      width: 30%;
+      text-align: right;
+      display: flex;
+      align-items: center;
+
+      .productPrice {
+        font-size: 2.5rem;
+        margin-right: 1rem;
+      }
+
+      button {
+        margin-top: 0;
+        font-size: 1.5rem;
+        padding: 1rem;
+      }
+    }
+  }
+}

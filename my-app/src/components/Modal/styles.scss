@@ -16,6 +16,7 @@
   pointer-events: none;
 
   .modal {
+    
     position: absolute;
     top: 50%;
     left: 50%;
@@ -26,8 +27,10 @@
     width: 95%;
     padding: 2rem;
     max-width: 60rem;
-    height: auto;
+    height: 90%;
     min-height: 40rem;
     pointer-events: all;
+    overflow-y: scroll;
+    
   }
 }

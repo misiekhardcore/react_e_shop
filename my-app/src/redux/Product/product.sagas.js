@@ -4,20 +4,16 @@ import {
   handleAddProduct,
   handleFetchProducts,
   handleDeleteProduct,
+  handleFetchProduct,
 } from "./product.helpers";
-import { setProducts, fetchProductsStart } from "./product.actions";
+import { setProducts, setProduct, fetchProductsStart } from "./product.actions";
 import productTypes from "./product.types";
 
-export function* addProduct({
-  payload: { productName, productCategory, productPrice, productThumbnail },
-}) {
+export function* addProduct({ payload }) {
   try {
     const timestamp = new Date();
     yield handleAddProduct({
-      productName,
-      productCategory,
-      productPrice,
-      productThumbnail,
+      ...payload,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
     });
@@ -57,10 +53,24 @@ export function* onDeleteProductStart() {
   yield takeLatest(productTypes.DELETE_PRODUCT_START, deleteProduct);
 }
 
+export function* fecthProduct({ payload }) {
+  try {
+    const product = yield handleFetchProduct(payload);
+    yield put(setProduct(product));
+  } catch (err) {
+    // console.log(err)
+  }
+}
+
+export function* onFetchProductStart() {
+  yield takeLatest(productTypes.FETCH_PRODUCT_START, fecthProduct);
+}
+
 export default function* productSagas() {
   yield all([
     call(onAddProductStart),
     call(onFetchProductsStart),
     call(onDeleteProductStart),
+    call(onFetchProductStart),
   ]);
 }

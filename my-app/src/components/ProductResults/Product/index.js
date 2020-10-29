@@ -1,13 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "./../../forms/Button";
 
 const Product = ({
+  documentID,
   productName,
   productThumbnail,
   productCategory,
   productPrice,
 }) => {
   if (
+    !documentID ||
     !productCategory ||
     !productThumbnail ||
     !productName ||
@@ -22,12 +25,16 @@ const Product = ({
   return (
     <div className="product">
       <div className="thumb">
-        <img src={productThumbnail} alt={productName} />
+        <Link to={`/product/${documentID}`}>
+          <img src={productThumbnail} alt={productName} />
+        </Link>
       </div>
       <div className="details">
         <ul>
           <li>
-            <span className="productName"> {productName} </span>
+            <span className="productName">
+              <Link to={`/product/${documentID}`}> {productName} </Link>
+            </span>
           </li>
           <li>
             <span className="productPrice"> ${productPrice} </span>

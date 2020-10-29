@@ -1,9 +1,8 @@
 .formrow {
+  margin: 1rem 0 0;
   width: 100%;
-  display: flex;
-  align-items: center;
   font-family: "Open-sans", sans-serif;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: black;
   background-color: white;
   line-height: 1;
@@ -12,7 +11,7 @@
   outline: none;
 
   input {
-    margin: 2rem 0 0;
+    margin: 1rem 0 0;
     width: 100%;
     padding: 1rem 2rem;
     font-size: inherit;
