@@ -4,3 +4,13 @@ export const addProduct = (nexCartItem) => ({
   type: cartTypes.ADD_TO_CART,
   payload: nexCartItem,
 });
+
+export const subtractFromCart = (cartItem) => ({
+  type: cartTypes.SUBTRACT_FROM_CART,
+  payload: cartItem,
+});
+
+export const removeCartItem = (cartItem) => ({
+  type: cartTypes.REMOVE_CART_ITEM,
+  payload: cartItem,
+});
