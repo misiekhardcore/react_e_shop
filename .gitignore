@@ -1,1 +1,3 @@
 .vscode/settings.json
+my-app/functions/firebase-debug.log
+.gitignore
