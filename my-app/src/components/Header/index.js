@@ -44,22 +44,23 @@ const Header = (props) => {
             <li>
               <Link to="/cart">
                 Your Cart{" "}
-                {totalNumberCartItems > 0 && `(${totalNumberCartItems})`}
+                {totalNumberCartItems > 0 &&
+                  `(${totalNumberCartItems})`}
               </Link>
             </li>
             {currentUser && [
-              <li>
+              <li key="1">
                 <Link to="/dashboard">My Account</Link>
               </li>,
-              <li>
+              <li key="2">
                 <span onClick={() => signOut()}>Log Out</span>
               </li>,
             ]}
             {!currentUser && [
-              <li>
+              <li key="1">
                 <Link to="/registration">Register</Link>
               </li>,
-              <li>
+              <li key="2">
                 <Link to="/login">Sign In</Link>
               </li>,
             ]}

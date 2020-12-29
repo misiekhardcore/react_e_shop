@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
 import { CountryDropdown } from "react-country-region-selector";
-import { clearCart } from "../../redux/Cart/cart.actions";
+import { saveOrderHistory } from "../../redux/Order/order.actions";
 import { apiInstance } from "../../Utils";
 import {
   selectCartTotal,
   selectCartItemsCount,
+  selectCartIems,
 } from "../../redux/Cart/cart.selectors";
 
 import "./styles.scss";
@@ -27,16 +32,21 @@ const initialState = {
 const mapState = createStructuredSelector({
   total: selectCartTotal,
   itemsCount: selectCartItemsCount,
+  cartItems: selectCartIems,
 });
 
 const PaymentDetails = () => {
   const stripe = useStripe();
-  const { total, itemsCount } = useSelector(mapState);
+  const { total, itemsCount, cartItems } = useSelector(mapState);
   const dispatch = useDispatch();
   const history = useHistory();
   const elements = useElements();
-  const [billingAddress, setBillingAddress] = useState({ ...initialState });
-  const [shippingAddress, setShippingAddress] = useState({ ...initialState });
+  const [billingAddress, setBillingAddress] = useState({
+    ...initialState,
+  });
+  const [shippingAddress, setShippingAddress] = useState({
+    ...initialState,
+  });
   const [recipientName, setRecipientName] = useState("");
   const [nameOnCard, setNameOnCard] = useState("");
 
@@ -90,7 +100,27 @@ const PaymentDetails = () => {
                 payment_method: paymentMethod.id,
               })
               .then(({ paymentIntent }) => {
-                dispatch(clearCart());
+                const configOrder = {
+                  orderTotal: total,
+                  orderItems: cartItems.map((item) => {
+                    const {
+                      documentID,
+                      productThumbnail,
+                      productName,
+                      productPrice,
+                      quantity,
+                    } = item;
+                    return {
+                      documentID,
+                      productThumbnail,
+                      productName,
+                      productPrice,
+                      quantity,
+                    };
+                  }),
+                };
+
+                dispatch(saveOrderHistory(configOrder));
               });
           });
       });
@@ -98,9 +128,10 @@ const PaymentDetails = () => {
 
   useEffect(() => {
     if (itemsCount < 1) {
-      history.push("/");
+      // eslint-disable-next-line
+      history.push("/dashboard");
     }
-  }, [itemsCount]);
+  }, [itemsCount, history]);
 
   const handleShippingChange = (e) => {
     const { name, value } = e.target;
