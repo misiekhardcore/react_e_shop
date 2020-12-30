@@ -62,8 +62,8 @@ const OrderHistory = ({ orders }) => {
         </TableHead>
 
         <TableBody>
-          {Array.isArray(orders) &&
-            orders.length > 0 &&
+          {(Array.isArray(orders) &&
+            orders.length > 0) ?
             orders.map((row, pos) => {
               const { documentID } = row;
               return (
@@ -86,7 +86,7 @@ const OrderHistory = ({ orders }) => {
                   })}
                 </TableRow>
               );
-            })}
+            }):<p>You have no order history</p>}
         </TableBody>
       </Table>
     </TableContainer>
