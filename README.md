@@ -5,7 +5,3 @@ E-commerce with React
 
 - in functions folder run `yarn run serve`
 - in my-app folder run `yarn start`
-
-### part 22
-
-- add security rules on firebase cloud database
